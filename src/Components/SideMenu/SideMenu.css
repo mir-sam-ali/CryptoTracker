@@ -1,0 +1,25 @@
+.SideMenu {
+  margin: 0.2rem;
+  width: 100%;
+  height: 100vh;
+
+  font-family: "Ubuntu", "sans-serif";
+  overflow: scroll;
+  /* background-color: #f6f6f7; */
+  box-shadow: 0 10px 5px rgba(0, 0, 0, 0.3);
+}
+
+.listItem:hover {
+  box-shadow: 0 0px 9px rgba(0, 0, 0, 0.5);
+}
+
+.InputDiv {
+  display: flex;
+  justify-content: flex-start;
+  margin: 0 auto;
+}
+
+.SideMenuDiv {
+  margin-top: 2rem;
+  padding: 0 1rem;
+}

@@ -1,0 +1,10 @@
+.heading {
+  font-family: "Quantico", sans-serif;
+  font-size: 1rem;
+}
+
+@media (min-width: 700px) {
+  .heading {
+    font-size: 2rem;
+  }
+}

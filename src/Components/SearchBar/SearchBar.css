@@ -1,0 +1,12 @@
+.Search {
+  width: 100%;
+}
+
+.SearchDiv {
+  display: inline-block;
+  width: 80%;
+}
+
+.MuiInputBase-input {
+  border-color: #3f51b5;
+}
