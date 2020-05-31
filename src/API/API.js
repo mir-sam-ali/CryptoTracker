@@ -23,16 +23,15 @@ const getDates = () => {
   );
 
   for (let i = 1; i < 10; i++) {
-    if (curr_day <= i) {
-      let remaining_days = i - curr_day;
+    old_day--;
+    if (old_day === 0) {
       old_month--;
       if (old_month === 0) {
         old_month = 12;
         old_year--;
       }
-      old_day = months[old_month] - remaining_days;
-    } else {
-      old_day = curr_day - i;
+
+      old_day = months[old_month];
     }
 
     last_10_dates.push(
@@ -115,7 +114,9 @@ export async function getHistoricData(options) {
 
     if (!allData[0]) {
       let oldValue = localStorage.getItem("Live_Data_" + dates[0]);
+
       if (oldValue !== null) oldValue = await JSON.parse(oldValue);
+      allData[0] = oldValue;
     }
 
     let historyOfEachCrypto = {};
