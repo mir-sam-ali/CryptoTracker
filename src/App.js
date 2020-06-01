@@ -11,7 +11,8 @@ function App() {
   let [HistoricData, setHistoricData] = useState(null);
   let [cryptoList, setCryptoList] = useState(null);
   let [GraphCurves, setGraphCurves] = useState(null);
-  let [showError, setShowError] = useState(false);
+
+  let [errorMessage, setErrorMessage] = useState("");
 
   const getDataFromAPI = async () => {
     const liveData = await getLiveData({ currency: "INR" });
@@ -19,23 +20,27 @@ function App() {
     const history = await getHistoricData({ currency: "INR" });
     const list_curr = await getCryptoList();
 
-    setLiveData(liveData);
-    setHistoricData(history);
-    setCryptoList(list_curr);
-    setGraphCurves([
-      {
-        name: "BTC",
-        data: history.historyOfEachCrypto["BTC"],
-      },
-      {
-        name: "GRWI",
-        data: history.historyOfEachCrypto["GRWI"],
-      },
-      {
-        name: "ETH",
-        data: history.historyOfEachCrypto["ETH"],
-      },
-    ]);
+    if (liveData.success && history.success && list_curr.success) {
+      setLiveData(liveData.data);
+      setHistoricData(history.data);
+      setCryptoList(list_curr.data);
+      setGraphCurves([
+        {
+          name: "BTC",
+          data: history.data.historyOfEachCrypto["BTC"],
+        },
+        {
+          name: "GRWI",
+          data: history.data.historyOfEachCrypto["GRWI"],
+        },
+        {
+          name: "ETH",
+          data: history.data.historyOfEachCrypto["ETH"],
+        },
+      ]);
+    } else {
+      setErrorMessage("Something went wrong");
+    }
   };
 
   const addCurveToGraph = (currency) => {
@@ -45,7 +50,9 @@ function App() {
     });
     if (isPresent === undefined) {
       if (GraphCurves.length === 10) {
-        setShowError(true);
+        setErrorMessage(
+          " You've reached the Maximum limit of 10 curves! Delete some curves to add new curves"
+        );
         return;
       }
       let newCurve = {
@@ -63,8 +70,8 @@ function App() {
     let newGraph = GraphCurves.filter((curve) => {
       return curve.name !== currency;
     });
-    if (showError === true) {
-      setShowError(false);
+    if (errorMessage !== "") {
+      setErrorMessage("");
     }
     setGraphCurves(newGraph);
   };
@@ -93,7 +100,7 @@ function App() {
             dates={HistoricData ? HistoricData.dates : null}
             deleteCurve={deleteCurve}
             cryptoList={cryptoList}
-            showError={showError}
+            error={errorMessage}
           />
         </Grid>
         <Grid item xs={12} md={5}>

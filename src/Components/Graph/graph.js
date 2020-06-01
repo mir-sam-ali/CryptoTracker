@@ -128,11 +128,8 @@ class Graph extends React.Component {
           cryptoList={this.props.cryptoList}
         />
         <hr />
-        {this.props.showError ? (
-          <Alert severity="error">
-            You've reached the Maximum limit of 10 curves! Delete some curves to
-            add new curves.
-          </Alert>
+        {this.props.error !== "" ? (
+          <Alert severity="error">{this.props.error}</Alert>
         ) : null}
 
         <article className="canvas-container">
